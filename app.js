@@ -3,7 +3,7 @@ const $ref = {
   ctx: document.getElementById('jsCanvas').getContext('2d')
 }
 
-let painting = false;
+painting = false;
 
 //function
 //function
