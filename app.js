@@ -1,6 +1,7 @@
 const $ref = {
   canvas: document.getElementById('jsCanvas'),
-  ctx: document.getElementById('jsCanvas').getContext('2d')
+  ctx: document.getElementById('jsCanvas').getContext('2d'),
+  colors: document.getElementsByClassName('jsColor')
 }
 
 painting = false;
@@ -24,8 +25,9 @@ function onMouseMove(event) {
 function stopPainting(event) {
   painting = false;
 }
-function onMouseDown(event) {
-  painting = true;
+function handleColorClick(event) {
+  const color = event.target.style.backgroundColor;
+  $ref.ctx.strokeStyle = color;
 }
 
 
@@ -40,3 +42,9 @@ $ref.canvas.width = 640;
 $ref.canvas.height = 640;
 $ref.ctx.strokeStyle = '##2c2c2c';
 $ref.ctx.lineWidth = 1.0;
+
+console.log($ref.colors)
+console.log(Array.from($ref.colors))
+Array.from($ref.colors).forEach(color =>
+  color.addEventListener('click', handleColorClick)
+)
