@@ -88,7 +88,8 @@ if($ref.saveBtn) {
 
 $ref.canvas.width = $ref.CANVAS_SIZE;
 $ref.canvas.height = $ref.CANVAS_SIZE;
-// $ref.ctx.fillRect(0, 0, $ref.CANVAS_SIZE, $ref.CANVAS_SIZE)
+$ref.ctx.fillStyle = 'white';
+$ref.ctx.fillRect(0, 0, $ref.CANVAS_SIZE, $ref.CANVAS_SIZE)
 $ref.ctx.strokeStyle = $ref.INITIAL_COLOR;
 $ref.ctx.fillStyle = $ref.INITIAL_COLOR;
 $ref.ctx.lineWidth = 1.0;
