@@ -4,7 +4,8 @@ const $ref = {
   ctx: document.getElementById('jsCanvas').getContext('2d'),
   colors: document.getElementsByClassName('jsColor'),
   range: document.getElementById('jsRange'),
-  mode: document.getElementById('jsMode'),
+  modeBtn: document.getElementById('jsMode'),
+  saveBtn: document.getElementById('jsSave'),
   filling: false,
   CANVAS_SIZE: 640,
   INITIAL_COLOR: '#2c2c2c'
@@ -35,23 +36,32 @@ function handleColorClick(event) {
   $ref.ctx.fillStyle = color;
 }
 function handleRangeChange(event) {
-  const size = event.target.value
+  const size = event.target.value;
   $ref.ctx.lineWidth = size;
 }
 function handleModeChange() {
   if($ref.filling === true) {
     $ref.filling = false;
-    $ref.mode.innerText = 'fill'
+    $ref.modeBtn.innerText = 'fill';
   } else {
     $ref.filling = true;
-    $ref.mode.innerText = 'paint'
+    $ref.modeBtn.innerText = 'paint';
   }
 }
 function handleCanvasClick() {
   if($ref.filling) {
-    console.log($ref.filling)
-    $ref.ctx.fillRect(0, 0, $ref.CANVAS_SIZE, $ref.CANVAS_SIZE)
+    $ref.ctx.fillRect(0, 0, $ref.CANVAS_SIZE, $ref.CANVAS_SIZE);
   }
+}
+function handleCM(event) {
+  event.preventDefault();
+}
+function handleSaveClick() {
+  const image = $ref.canvas.toDataURL();
+  const link = document.createElement('a');
+  link.href = image;
+  link.download = 'MyWork >_<';
+  link.click();
 }
 
 
@@ -61,20 +71,26 @@ if($ref.canvas) {
   $ref.canvas.addEventListener('mouseup', stopPainting);
   $ref.canvas.addEventListener('mouseleave', stopPainting);
   $ref.canvas.addEventListener('click', handleCanvasClick);
+  $ref.canvas.addEventListener('contextmenu', handleCM);
 }
 
 if($ref.range) {
-  $ref.range.addEventListener('input', handleRangeChange)
+  $ref.range.addEventListener('input', handleRangeChange);
 }
 
-if($ref.mode) {
-  $ref.mode.addEventListener('click', handleModeChange)
+if($ref.modeBtn) {
+  $ref.modeBtn.addEventListener('click', handleModeChange);
+}
+
+if($ref.saveBtn) {
+  $ref.saveBtn.addEventListener('click', handleSaveClick);
 }
 
 $ref.canvas.width = $ref.CANVAS_SIZE;
 $ref.canvas.height = $ref.CANVAS_SIZE;
+// $ref.ctx.fillRect(0, 0, $ref.CANVAS_SIZE, $ref.CANVAS_SIZE)
 $ref.ctx.strokeStyle = $ref.INITIAL_COLOR;
 $ref.ctx.fillStyle = $ref.INITIAL_COLOR;
 $ref.ctx.lineWidth = 1.0;
 
-Array.from($ref.colors).forEach(color => color.addEventListener('click', handleColorClick))
+Array.from($ref.colors).forEach(color => color.addEventListener('click', handleColorClick));
